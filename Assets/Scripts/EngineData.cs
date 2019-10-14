@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class EngineData : MonoBehaviour
 {
-    public List<float> time = new List<float>();
-    public List<float> throttle = new List<float>();
-    public List<float> temp = new List<float>();
-    public List<float> rpm = new List<float>();
-    public List<float> pressure = new List<float>();
-    public List<float> speed = new List<float>();
+    public TimeManager timeManager;
+    public rpmMeter RPMmeter;
+    public Speedometer speedometer;
+    private List<float> time = new List<float>();
+    private List<float> throttle = new List<float>();
+    private List<float> temp = new List<float>();
+    private List<int> rpm = new List<int>();
+    private List<float> pressure = new List<float>();
+    private List<float> speed = new List<float>();
 
-    public int originalIteratorNumber = 0;
-    public float beginningTimeStamp = 0;
     // Start is called before the first frame update
     void Start()
     {
+
         int intResult;
         float floatResult;
         TextAsset file = Resources.Load<TextAsset>("data");
@@ -31,7 +33,7 @@ public class EngineData : MonoBehaviour
 
                 float.TryParse(items[0], out floatResult);
                 time.Add(floatResult);
-                
+                //print(floatResult);
                 float.TryParse(items[1], out floatResult);
                 throttle.Add(floatResult);
                 
@@ -45,12 +47,34 @@ public class EngineData : MonoBehaviour
                 pressure.Add(floatResult);
             }
         }
-        beginningTimeStamp = time[0];
+        timeManager.setBeginningTimeStamp(getTime(0));
+        RPMmeter.updateRPMvalues();
+        speedometer.updateSpeedometerValues();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public float getTime(int index)
+    {
+        return time[index];
+    }
+
+    public int getListLength()
+    {
+        return time.Count;
+    }
+
+    public int getRPM(int index)
+    {
+        return rpm[index];
+    }
+
+    public float getSpeed(int index)
+    {
+        return speed[index];
     }
 }

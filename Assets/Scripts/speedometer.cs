@@ -2,38 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
-public class speedometer : MonoBehaviour
+public class Speedometer : MonoBehaviour
 {
+    static public float DEGREE_PER_KM_PER_H = -1.41f;
+    
     public GameObject needle;
     public EngineData engineData;
     public TimeManager timeManager;
-    
-    static public float DEGREE_PER_KM_PER_H = -1.41f;
+    public Text speedText;
 
-    private int iterator = 0;
+    private float splitTime;
+    private float firstSpeed;
+    private float rotationSpeed;
     
     void Start()
     {
-        iterator = engineData.originalIteratorNumber;
+        
     }
 
     void Update()
     {
-        if (iterator + 1 <= engineData.time.Count - 2)
+        if (timeManager.getIterator() + 1 <= engineData.getListLength() - 2)
         {
-            if (timeManager.currentTime > engineData.time[iterator] - engineData.beginningTimeStamp)
+            print(timeManager.currentTime%splitTime);
+            if (1.9f - (timeManager.currentTime%splitTime) < (float)(1/30))
             {
-                iterator = iterator + 1;
+                print("allo");
             }
-            float firstTime = engineData.time.ElementAt(iterator);
-            float secondTime = engineData.time.ElementAt(iterator + 1);
-            float splitTime = secondTime - firstTime;
-            float firstSpeed = engineData.speed.ElementAt(iterator);
-            float secondSpeed = engineData.speed.ElementAt(iterator + 1);
-            float splitSpeed = secondSpeed - firstSpeed;
-            float rotationSpeed = splitSpeed / splitTime;
-            float currentSpeed = firstSpeed + timeManager.currentTime%splitTime * rotationSpeed;
+            float currentSpeed = firstSpeed + (timeManager.currentTime%splitTime) * rotationSpeed;
+            int intCurrentSpeed = (int)currentSpeed;
+            speedText.text = intCurrentSpeed.ToString();
             float currentDegree = currentSpeed * DEGREE_PER_KM_PER_H;
             needle.transform.Rotate(0.0f ,0.0f,  currentDegree);
             needle.transform.localRotation = Quaternion.Euler(0f, 0f, currentDegree);
@@ -44,5 +44,16 @@ public class speedometer : MonoBehaviour
             Application.Quit();
         }
         
+    }
+
+    public void updateSpeedometerValues()
+    {
+        float firstTime = engineData.getTime(timeManager.getIterator());
+        float secondTime = engineData.getTime(timeManager.getIterator() + 1);
+        splitTime = secondTime - firstTime;
+        firstSpeed = engineData.getSpeed(timeManager.getIterator());
+        float secondSpeed = engineData.getSpeed(timeManager.getIterator() + 1);
+        float splitSpeed = secondSpeed - firstSpeed;
+        rotationSpeed = splitSpeed / splitTime;
     }
 }
