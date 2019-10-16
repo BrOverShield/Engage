@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d57ab0e93db48c43a5a7059027155a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SPLIT_TIME: 1.9
   timeManager: {fileID: 1293075454}
   RPMmeter: {fileID: 2142986960}
   speedometer: {fileID: 1523510299}
@@ -756,6 +757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RPMmanager: {fileID: 2142986960}
   speedometer: {fileID: 1523510299}
+  engineData: {fileID: 505526405}
   currentTime: 0
   originalIteratorNumber: 0
   frameLength: 0
