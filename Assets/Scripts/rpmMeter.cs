@@ -13,7 +13,6 @@ public class rpmMeter : MonoBehaviour
     public TimeManager timeManager;
     public Text RPMtext;
 
-    private float splitTime;
     private int firstRPM;
     private float rotationSpeed;
 
@@ -28,7 +27,7 @@ public class rpmMeter : MonoBehaviour
     {
         if (timeManager.getIterator() + 1 <= engineData.getListLength() - 2)
         {
-            float currentRPM = (float)firstRPM + timeManager.currentTime%splitTime * rotationSpeed;
+            float currentRPM = (float)firstRPM + timeManager.currentTime%engineData.SPLIT_TIME * rotationSpeed;
             RPMtext.text = (currentRPM / 1000).ToString("F1");
             float currentDegree = currentRPM * DEGREE_PER_RPM;
             needle.transform.Rotate(0.0f ,0.0f,  currentDegree);
@@ -45,10 +44,9 @@ public class rpmMeter : MonoBehaviour
     {
         float firstTime = engineData.getTime(timeManager.getIterator());
         float secondTime = engineData.getTime(timeManager.getIterator() + 1);
-        splitTime = secondTime - firstTime;
         firstRPM = (int)engineData.getRPM(timeManager.getIterator());
         float secondRPM = engineData.getRPM(timeManager.getIterator() + 1);
         float splitRPM = secondRPM - firstRPM;
-        rotationSpeed = splitRPM / splitTime;
+        rotationSpeed = splitRPM / engineData.SPLIT_TIME;
     }
 }

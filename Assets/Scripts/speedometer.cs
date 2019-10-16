@@ -13,7 +13,6 @@ public class Speedometer : MonoBehaviour
     public TimeManager timeManager;
     public Text speedText;
 
-    private float splitTime;
     private float firstSpeed;
     private float rotationSpeed;
     
@@ -24,14 +23,23 @@ public class Speedometer : MonoBehaviour
 
     void Update()
     {
+        
+    }
+
+    public void updateSpeedometerValues()
+    {
+        firstSpeed = engineData.getSpeed(timeManager.getIterator());
+        float secondSpeed = engineData.getSpeed(timeManager.getIterator() + 1);
+        float splitSpeed = secondSpeed - firstSpeed;
+        rotationSpeed = splitSpeed / engineData.SPLIT_TIME;
+    }
+
+    public void updateSpeedometerNeedle()
+    {
         if (timeManager.getIterator() + 1 <= engineData.getListLength() - 2)
         {
-            print(timeManager.currentTime%splitTime);
-            if (1.9f - (timeManager.currentTime%splitTime) < (float)(1/30))
-            {
-                print("allo");
-            }
-            float currentSpeed = firstSpeed + (timeManager.currentTime%splitTime) * rotationSpeed;
+            float currentSpeed = firstSpeed + (timeManager.currentTime%engineData.SPLIT_TIME) * rotationSpeed;
+            //print("splittime : " + timeManager.currentTime%timeManager.SPLIT_TIME);
             int intCurrentSpeed = (int)currentSpeed;
             speedText.text = intCurrentSpeed.ToString();
             float currentDegree = currentSpeed * DEGREE_PER_KM_PER_H;
@@ -43,17 +51,5 @@ public class Speedometer : MonoBehaviour
             print("done!");
             Application.Quit();
         }
-        
-    }
-
-    public void updateSpeedometerValues()
-    {
-        float firstTime = engineData.getTime(timeManager.getIterator());
-        float secondTime = engineData.getTime(timeManager.getIterator() + 1);
-        splitTime = secondTime - firstTime;
-        firstSpeed = engineData.getSpeed(timeManager.getIterator());
-        float secondSpeed = engineData.getSpeed(timeManager.getIterator() + 1);
-        float splitSpeed = secondSpeed - firstSpeed;
-        rotationSpeed = splitSpeed / splitTime;
     }
 }

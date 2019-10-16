@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EngineData : MonoBehaviour
 {
+    public float SPLIT_TIME = 1.9f;
+    
     public TimeManager timeManager;
     public rpmMeter RPMmeter;
     public Speedometer speedometer;

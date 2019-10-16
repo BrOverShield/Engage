@@ -6,6 +6,7 @@ public class TimeManager : MonoBehaviour
 {
     public rpmMeter RPMmanager;
     public Speedometer speedometer;
+    public EngineData engineData;
     public float currentTime;
     public static int framesPerSecond = 30;
     public int originalIteratorNumber = 0;
@@ -20,21 +21,20 @@ public class TimeManager : MonoBehaviour
         iterator = originalIteratorNumber;
         frameLength = (float)(1m/framesPerSecond);
         currentTime = 0;
-        // print(frameLength);
     }
 
     // Update is called once per frame
     void Update()
     {
         currentTime = currentTime + frameLength;
-        //print(currentTime);
-        if (currentTime / ((iterator + 1) * 1.9f) > 1)
+        if (currentTime / ((iterator + 1) * engineData.SPLIT_TIME) > 1)
         {
             iterator += 1;
-            print("NOW");
             RPMmanager.updateRPMvalues();
             speedometer.updateSpeedometerValues();
+
         }
+        speedometer.updateSpeedometerNeedle();
     }
 
     public void setBeginningTimeStamp(float value)
@@ -46,4 +46,5 @@ public class TimeManager : MonoBehaviour
     {
         return iterator;
     }
+
 }
