@@ -14,6 +14,7 @@ public class TimeManager : MonoBehaviour
 
     public float frameLength;
     private float beginningTimeStamp;
+    private int frameCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class TimeManager : MonoBehaviour
             speedometer.updateSpeedometerValues();
 
         }
+        frameCount += 1;
         speedometer.updateSpeedometerNeedle();
     }
 
@@ -45,6 +47,10 @@ public class TimeManager : MonoBehaviour
     public int getIterator()
     {
         return iterator;
+    }
+    public int getFrameCount()
+    {
+        return frameCount;
     }
 
 }
