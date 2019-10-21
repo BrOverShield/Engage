@@ -79,4 +79,9 @@ public class EngineData : MonoBehaviour
     {
         return speed[index];
     }
+
+    public float getPressure(int index)
+    {
+        return pressure[index];
+    }
 }
