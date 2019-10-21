@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class PressureManager : MonoBehaviour
 {
 
-    static public string MAX_PRESSURE_MESSAGE_START = "Max Pressure : ";
-    static public string AVG_PRESSURE_MESSAGE_START = "Avg Pressure : ";
-    static public float DEGREE_PER_KPA = -1;
-    static public string KPA_UNIT = "kPa";
+    static public string MAX_PRESSURE_MESSAGE_START = "Max Boost : ";
+    static public string AVG_PRESSURE_MESSAGE_START = "Avg Boost : ";
+    static public float DEGREE_PER_KPA = -0.6f;
+    static public float DEGREE_PER_PSI = -6.0f;
+    static public string PSI_UNIT = "PSI";
+    static public float NEEDLE_OFFSET = -60.0f;
 
     public GameObject needle;
     public EngineData engineData;
@@ -54,7 +56,7 @@ public class PressureManager : MonoBehaviour
             confirmAndSetMaxPressure(intCurrentPressure);
             updateAvgPressure(intCurrentPressure);
             pressureText.text = intCurrentPressure.ToString();
-            float currentDegree = currentPressure * DEGREE_PER_KPA;
+            float currentDegree = currentPressure * DEGREE_PER_PSI + NEEDLE_OFFSET;
             needle.transform.Rotate(0.0f ,0.0f,  currentDegree);
             needle.transform.localRotation = Quaternion.Euler(0f, 0f, currentDegree);
         }
@@ -76,7 +78,7 @@ public class PressureManager : MonoBehaviour
 
     private void updateMaxPressureText()
     {
-        maxPressureText.text = MAX_PRESSURE_MESSAGE_START + maxPressure.ToString() + " " + KPA_UNIT;
+        maxPressureText.text = MAX_PRESSURE_MESSAGE_START + maxPressure.ToString() + " " + PSI_UNIT;
     }
 
     private void updateAvgPressure(int newPressure)
@@ -89,6 +91,6 @@ public class PressureManager : MonoBehaviour
 
     private void updateAvgPressureText()
     {
-        avgPressureText.text = AVG_PRESSURE_MESSAGE_START + avgPressure.ToString() + " " + KPA_UNIT;
+        avgPressureText.text = AVG_PRESSURE_MESSAGE_START + avgPressure.ToString() + " " + PSI_UNIT;
     }
 }

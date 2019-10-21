@@ -5,6 +5,8 @@ using UnityEngine;
 public class EngineData : MonoBehaviour
 {
     public float SPLIT_TIME = 1.9f;
+    public float ATMOSPHERIC_PRESSURE_KPA = 101.5f;
+    public float KPA_TO_PSI = 0.1450377f;
     
     public TimeManager timeManager;
     public rpmMeter RPMmeter;
@@ -46,7 +48,9 @@ public class EngineData : MonoBehaviour
                 rpm.Add(intResult);
                 
                 float.TryParse(items[4], out floatResult);
-                pressure.Add(floatResult);
+                float boostPressure = floatResult - ATMOSPHERIC_PRESSURE_KPA;
+                float BoostPSI = boostPressure * KPA_TO_PSI;
+                pressure.Add(BoostPSI);
             }
         }
         timeManager.setBeginningTimeStamp(getTime(0));

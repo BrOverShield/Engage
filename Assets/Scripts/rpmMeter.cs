@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class rpmMeter : MonoBehaviour
 {
-    static public float DEGREE_PER_RPM = -0.0426f;
+    static public float DEGREE_PER_RPM = -0.03f;
     static public string AVG_RPM_MESSAGE_START = "Avg RPM : ";
     static public int AVG_RPM_DISPLAY_MULTIPLIER = 1000;
     

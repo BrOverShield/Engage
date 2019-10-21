@@ -7,6 +7,7 @@ public class TimeManager : MonoBehaviour
     public rpmMeter RPMmanager;
     public Speedometer speedometer;
     public EngineData engineData;
+    public PressureManager boostMeter;
     public float currentTime;
     public static int framesPerSecond = 30;
     public int originalIteratorNumber = 0;
@@ -33,10 +34,12 @@ public class TimeManager : MonoBehaviour
             iterator += 1;
             RPMmanager.updateRPMvalues();
             speedometer.updateSpeedometerValues();
+            boostMeter.updatePressureValues();
 
         }
         frameCount += 1;
         speedometer.updateSpeedometerNeedle();
+        boostMeter.updatePressureNeedle();
     }
 
     public void setBeginningTimeStamp(float value)

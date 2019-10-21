@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Speedometer : MonoBehaviour
 {
-    static public float DEGREE_PER_KM_PER_H = -1.41f;
+    static public float DEGREE_PER_KM_PER_H = -1.2f;
     static public string KM_PER_H_UNIT = "km/h";
     static public string MAX_SPEED_MESSAGE_START = "Max Speed : ";
     static public string AVG_SPEED_MESSAGE_START = "Avg Speed : ";
